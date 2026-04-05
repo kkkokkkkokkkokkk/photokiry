@@ -59,7 +59,7 @@
   // ── Loading state ──────────────────────────────
   function setLoading(btn, loading, label) {
     btn.disabled = loading;
-    btn.textContent = loading ? 'Please wait…' : label;
+    btn.textContent = loading ? 'Пожалуйста подождите…' : label;
     btn.style.opacity = loading ? '0.65' : '1';
   }
 

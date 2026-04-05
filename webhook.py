@@ -82,6 +82,54 @@ def handle_publish(chat_id, sender_id, args):
         print("PUBLISH ERROR:", e)
         send_message(chat_id, "❌ Failed to publish")
 
+def handle_delete(chat_id, sender_id, args):
+    if sender_id != ADMIN_TELEGRAM_ID:
+        send_message(chat_id, "⛔ Not authorised")
+        return
+
+    if len(args) < 1:
+        send_message(chat_id, "Usage: /delete @username")
+        return
+
+    username = args[0].lstrip("@").strip()
+
+    try:
+        from _shared import db_delete
+        db_delete(username)
+        send_message(chat_id, f"🗑 Deleted photoshoot for @{username}")
+    except Exception as e:
+        print("DELETE ERROR:", e)
+        send_message(chat_id, "❌ Failed to delete")
+
+def handle_broadcast(chat_id, sender_id, args):
+    if sender_id != ADMIN_TELEGRAM_ID:
+        send_message(chat_id, "⛔ Not authorised")
+        return
+
+    if not args:
+        send_message(chat_id, "Usage: /broadcast your message here")
+        return
+
+    message = " ".join(args)
+
+    try:
+        sb = get_supabase()
+        users = sb.table("telegram_users").select("chat_id").execute()
+
+        sent = 0
+
+        for user in users.data:
+            try:
+                send_message(user["chat_id"], message)
+                sent += 1
+            except Exception as e:
+                print("BROADCAST FAIL:", user["chat_id"], e)
+
+        send_message(chat_id, f"📢 Broadcast sent to {sent} users")
+    except Exception as e:
+        print("BROADCAST ERROR:", e)
+        send_message(chat_id, "❌ Broadcast failed")
+
 
 def webhook_logic():
     update = request.get_json(silent=True) or {}
@@ -106,6 +154,12 @@ def webhook_logic():
         handle_start(chat_id, user)
     elif command == "/publish":
         handle_publish(chat_id, sender_id, args)
+    
+    elif command == "/delete":
+        handle_delete(chat_id, sender_id, args)
+    
+    elif command == "/broadcast":
+        handle_broadcast(chat_id, sender_id, args)
 
 
 @app.route("/api/webhook", methods=["POST"])

@@ -1,59 +1,27 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "lookup.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "verify.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "publish.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "webhook.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.js",
-      "use": "@vercel/static"
-    }
+    { "src": "lookup.py",  "use": "@vercel/python" },
+    { "src": "verify.py",  "use": "@vercel/python" },
+    { "src": "publish.py", "use": "@vercel/python" },
+    { "src": "webhook.py", "use": "@vercel/python" },
+    { "src": "*.html",     "use": "@vercel/static" },
+    { "src": "*.css",      "use": "@vercel/static" },
+    { "src": "*.js",       "use": "@vercel/static" },
+    { "src": "*.jpg",      "use": "@vercel/static" },
+    { "src": "*.jpeg",     "use": "@vercel/static" },
+    { "src": "*.png",      "use": "@vercel/static" },
+    { "src": "*.webp",     "use": "@vercel/static" },
+    { "src": "*.gif",      "use": "@vercel/static" },
+    { "src": "*.svg",      "use": "@vercel/static" },
+    { "src": "*.ico",      "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "^/$",
-      "dest": "/index.html"
-    },
-    {
-      "src": "^/api/lookup",
-      "dest": "/lookup.py"
-    },
-    {
-      "src": "^/api/verify",
-      "dest": "/verify.py"
-    },
-    {
-      "src": "^/api/publish",
-      "dest": "/publish.py"
-    },
-    {
-      "src": "^/api/webhook",
-      "dest": "/webhook.py"
-    },
-    {
-      "src": "^/(.*)",
-      "dest": "/$1"
-    }
+    { "src": "^/$",             "dest": "/index.html" },
+    { "src": "^/api/lookup",    "dest": "/lookup.py"  },
+    { "src": "^/api/verify",    "dest": "/verify.py"  },
+    { "src": "^/api/publish",   "dest": "/publish.py" },
+    { "src": "^/api/webhook",   "dest": "/webhook.py" },
+    { "src": "^/(.*)",          "dest": "/$1"         }
   ]
 }

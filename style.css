@@ -7,7 +7,7 @@
 
 /* ── Design Tokens ─────────────────────────────────────── */
 :root {
-  --bg-image: url('bg.jpg'); /* ← swap to your background image filename */
+  --bg-image: url('bg\ \(2\).jpg'); /* ← swap to your background image filename */
 
   --void:        #060a10;
   --abyss:       #0c1420;
@@ -43,7 +43,7 @@ html { font-size: 16px; -webkit-text-size-adjust: 100%; }
 body {
   min-height: 100vh;
   min-height: 100dvh;
-  background-color: var(--void);
+  background-color: var(--void); /* fallback only — bg-layer paints over this */
   color: var(--silver);
   font-family: var(--font-body);
   display: flex;
@@ -51,20 +51,20 @@ body {
   justify-content: center;
   padding: 20px 16px;
   overflow-x: hidden;
-  position: relative;
+  /* NO position:relative — would create stacking context trapping bg-layer */
 }
 
 /* ── Background Image Layer ────────────────────────────── */
 .bg-layer {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -1;                   /* behind everything */
   background-image: var(--bg-image);
   background-size: cover;
-  background-position: center top;
+  background-position: center center;
   background-repeat: no-repeat;
-  filter: blur(4px) brightness(0.38) saturate(0.65);
-  transform: scale(1.05);
+  filter: blur(1px) brightness(1.20) saturate(1.2);
+  transform: scale(1.06);        /* hide blur edges */
 }
 
 .bg-layer::after {
@@ -88,11 +88,11 @@ body::after {
     0deg,
     transparent,
     transparent 2px,
-    rgba(0,0,0,0.04) 2px,
-    rgba(0,0,0,0.04) 4px
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;                    /* above bg-layer(-1), below screens(10) */
 }
 
 /* ── Screens ───────────────────────────────────────────── */
@@ -100,7 +100,7 @@ body::after {
   width: 100%;
   max-width: 400px;
   position: relative;
-  z-index: 10;
+  z-index: 10;                   /* well above bg(-1) and scanline(0) */
 }
 .screen.hidden { display: none; }
 
@@ -150,7 +150,7 @@ body::after {
 }
 
 /* Corner rune ticks */
-.card .corner {
+/* .card .corner {
   position: absolute;
   width: 16px; height: 16px;
   border-color: rgba(91,159,212,0.45);
@@ -160,7 +160,7 @@ body::after {
 .card .corner.tl { top: 12px; left: 12px; border-top-width:1px; border-left-width:1px;  border-radius:4px 0 0 0; }
 .card .corner.tr { top: 12px; right:12px; border-top-width:1px; border-right-width:1px; border-radius:0 4px 0 0; }
 .card .corner.bl { bottom:12px; left: 12px; border-bottom-width:1px; border-left-width:1px;  border-radius:0 0 0 4px; }
-.card .corner.br { bottom:12px; right:12px; border-bottom-width:1px; border-right-width:1px; border-radius:0 0 4px 0; }
+.card .corner.br { bottom:12px; right:12px; border-bottom-width:1px; border-right-width:1px; border-radius:0 0 4px 0; } */
 
 /* ── Sigil SVG ornament ────────────────────────────────── */
 .sigil-ornament {

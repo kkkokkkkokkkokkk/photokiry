@@ -1,0 +1,397 @@
+/* style.css — PhotoKiryy Telegram Mini App */
+
+/* ── Reset & Base ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:      #F5F0E8;
+  --paper:      #EDE8DF;
+  --ink:        #1A1612;
+  --warm-mid:   #8C7B6B;
+  --gold:       #C9A96E;
+  --gold-light: #E8D5B0;
+  --gold-faint: rgba(201,169,110,0.10);
+  --shadow:     rgba(26,22,18,0.12);
+  --error:      #B05040;
+  --success:    #4A7C59;
+
+  /* Telegram Mini App honours tg-* variables if present */
+  --tg-bg: var(--cream);
+}
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  min-height: 100vh;
+  background: var(--tg-bg);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+}
+
+/* grain texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Screens ──────────────────────────────────── */
+.screen {
+  width: 100%;
+  max-width: 380px;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.screen.hidden {
+  display: none;
+}
+
+/* ── Card ─────────────────────────────────────── */
+.card {
+  background: var(--paper);
+  border: 1px solid rgba(201,169,110,0.22);
+  border-radius: 4px;
+  padding: 48px 36px 40px;
+  box-shadow: 0 2px 10px var(--shadow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* inner border frame */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201,169,110,0.10);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* corner accents */
+.card .corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--gold-light);
+  border-style: solid;
+  border-width: 0;
+}
+.card .corner.tl { top: 12px; left: 12px; border-top-width: 1px; border-left-width: 1px; }
+.card .corner.tr { top: 12px; right: 12px; border-top-width: 1px; border-right-width: 1px; }
+.card .corner.bl { bottom: 12px; left: 12px; border-bottom-width: 1px; border-left-width: 1px; }
+.card .corner.br { bottom: 12px; right: 12px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ── Logo ─────────────────────────────────────── */
+.logo-block {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.logo-eyebrow {
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.32em;
+  color: var(--warm-mid);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.logo-text {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.logo-text em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.logo-rule {
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 12px auto 0;
+}
+
+/* ── Buttons ──────────────────────────────────── */
+.btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 18px;
+  border-radius: 2px;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+}
+
+.btn:hover  { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-dark {
+  background: var(--ink);
+  color: var(--cream);
+}
+.btn-dark:hover { background: #2e2822; }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+}
+.btn-outline:hover { background: var(--gold); color: var(--ink); }
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+.btn-gold:hover { background: var(--gold-light); }
+
+/* ── Divider ──────────────────────────────────── */
+.divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(140,123,107,0.22);
+}
+.divider span {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--warm-mid);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Inputs ───────────────────────────────────── */
+.input-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: var(--warm-mid);
+  pointer-events: none;
+  line-height: 1;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 13px 14px 13px 30px;
+  background: var(--cream);
+  border: 1px solid rgba(140,123,107,0.28);
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+input[type="text"]::placeholder { color: rgba(140,123,107,0.50); }
+input[type="text"]:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.11);
+}
+
+/* ── Hint / Error text ────────────────────────── */
+.hint {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--warm-mid);
+  text-align: center;
+  min-height: 16px;
+  margin-top: 10px;
+  transition: color 0.18s;
+}
+.hint.error   { color: var(--error); }
+.hint.success { color: var(--success); }
+
+/* ── Auth screen specifics ────────────────────── */
+.auth-back {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--warm-mid);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.18s;
+  z-index: 5;
+}
+.auth-back:hover { color: var(--ink); }
+
+.auth-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.28em;
+  color: var(--warm-mid);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.auth-username {
+  font-size: 24px;
+  font-weight: 300;
+  text-align: center;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.auth-username span { color: var(--gold); font-style: italic; }
+
+.auth-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--warm-mid);
+  text-align: center;
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+
+/* ── OTP Code boxes ───────────────────────────── */
+.code-row {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.code-box {
+  width: 42px;
+  height: 52px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 21px;
+  font-weight: 400;
+  background: var(--cream);
+  border: 1px solid rgba(140,123,107,0.28);
+  border-radius: 2px;
+  color: var(--ink);
+  outline: none;
+  padding: 0;
+  caret-color: var(--gold);
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.1s;
+  text-transform: uppercase;
+}
+.code-box:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.12);
+  transform: translateY(-2px);
+}
+.code-box.filled {
+  border-color: rgba(201,169,110,0.45);
+  background: var(--gold-faint);
+}
+.code-box.error-shake {
+  border-color: var(--error);
+  animation: shake 0.4s ease;
+}
+
+/* ── Success screen ───────────────────────────── */
+.success-icon {
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  animation: pulse 2.5s ease infinite;
+}
+
+.success-title {
+  font-size: 26px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.success-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--warm-mid);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+/* ── Animations ───────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(201,169,110,0.35); }
+  50%       { box-shadow: 0 0 0 10px rgba(201,169,110,0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* ── Watermark ────────────────────────────────── */
+.watermark {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.26em;
+  color: rgba(140,123,107,0.30);
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}

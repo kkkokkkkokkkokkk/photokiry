@@ -7,7 +7,7 @@
 
 /* ── Design Tokens ─────────────────────────────────────── */
 :root {
-  --bg-image: url('bg\ \(2\).jpg'); /* ← swap to your background image filename */
+  --bg-image: url('bg.jpg'); /* ← swap to your background image filename */
 
   --void:        #060a10;
   --abyss:       #0c1420;

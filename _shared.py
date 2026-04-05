@@ -162,3 +162,8 @@ def db_publish(username: str, url: str) -> bool:
         "updated_at": now,
     }).execute()
     return True
+
+def db_delete(username: str) -> bool:
+    sb = get_supabase()
+    sb.table("photoshoots").delete().eq("username", username.lower()).execute()
+    return True

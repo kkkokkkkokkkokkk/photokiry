@@ -66,9 +66,9 @@
   // ── Username validation ────────────────────────
   function validateUsername(raw) {
     const clean = raw.trim().replace(/^@/, '');
-    if (!clean) return { ok: false, msg: 'Please enter your Telegram username.' };
+    if (!clean) return { ok: false, msg: 'Пожалуйста, введите ваш username в Telegram.' };
     if (!/^[a-zA-Z0-9_]{3,32}$/.test(clean))
-      return { ok: false, msg: 'Username must be 3–32 chars: letters, numbers, underscores.' };
+      return { ok: false, msg: 'Юзернейм должен содержать от 3 до 32 символов: буквы, цифры, подчеркивания.' };
     return { ok: true, value: clean };
   }
 
@@ -81,15 +81,15 @@
       return;
     }
 
-    setLoading(els.searchBtn, true, 'Search my Photoshoot');
-    setHint(els.searchHint, 'Looking up your username…');
+    setLoading(els.searchBtn, true, 'Получить ссылку на фотосессию');
+    setHint(els.searchHint, 'Поиск фотосессии…');
 
     try {
       const result = await db.lookupUser(validation.value);
 
       if (!result.found) {
-        setHint(els.searchHint, 'No photoshoot found for this username.', 'error');
-        setLoading(els.searchBtn, false, 'Search my Photoshoot');
+        setHint(els.searchHint, 'Фотосессия не найдена для этого username.', 'error');
+        setLoading(els.searchBtn, false, 'Получить ссылку на фотосессию');
         return;
       }
 
@@ -104,9 +104,9 @@
 
     } catch (err) {
       console.error(err);
-      setHint(els.searchHint, 'Connection error. Please try again.', 'error');
+      setHint(els.searchHint, 'Ошибка подключения. Пожалуйста, попробуйте еще раз.', 'error');
     } finally {
-      setLoading(els.searchBtn, false, 'Search my Photoshoot');
+      setLoading(els.searchBtn, false, 'Получить ссылку на фотосессию');
     }
   }
 
@@ -120,7 +120,7 @@
       b.value = '';
       b.classList.remove('filled', 'error-shake');
     });
-    setHint(els.authHint, 'Check your Telegram — the bot sent you a 6-character code.');
+    setHint(els.authHint, 'Проверьте ваш Telegram — бот отправил вам 6-значный код.');
   }
 
   function shakeCodeBoxes() {
@@ -173,18 +173,18 @@
   async function handleVerify() {
     const code = getCodeValue();
     if (code.length < 6) {
-      setHint(els.authHint, 'Please enter all 6 characters of the code.', 'error');
+      setHint(els.authHint, 'Пожалуйста, введите все 6 символов кода.', 'error');
       return;
     }
 
-    setLoading(els.verifyBtn, true, 'Access my Gallery');
-    setHint(els.authHint, 'Verifying your code…');
+    setLoading(els.verifyBtn, true, 'Доступ к моей галерее');
+    setHint(els.authHint, 'Верификация…');
 
     try {
       const result = await db.verifyCode(state.sessionToken, code);
 
       if (!result.valid) {
-        setHint(els.authHint, 'Incorrect code. Please try again.', 'error');
+        setHint(els.authHint, 'Неверный код. Пожалуйста, попробуйте снова.', 'error');
         shakeCodeBoxes();
         els.codeBoxes.forEach(b => { b.value = ''; b.classList.remove('filled'); });
         els.codeBoxes[0].focus();
@@ -198,9 +198,9 @@
 
     } catch (err) {
       console.error(err);
-      setHint(els.authHint, 'Connection error. Please try again.', 'error');
+      setHint(els.authHint, 'Ошибка подключения. Пожалуйста, попробуйте еще раз.', 'error');
     } finally {
-      setLoading(els.verifyBtn, false, 'Access my Gallery');
+      setLoading(els.verifyBtn, false, 'Доступ к моей галерее');
     }
   }
 
@@ -226,7 +226,7 @@
   els.verifyBtn.addEventListener('click', handleVerify);
   els.backBtn.addEventListener('click', () => {
     showScreen('landing');
-    setHint(els.searchHint, 'Enter the username you use on Telegram.');
+    setHint(els.searchHint, 'Пожалуйста, введите ваш username в Telegram.');
   });
 
   els.galleryLink.addEventListener('click', handleOpenGallery);
